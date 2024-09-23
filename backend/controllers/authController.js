@@ -25,6 +25,18 @@ exports.register = async (req, res) => {
   }
 };
 
+// backend/controllers/authController.js
+exports.getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json({ user });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
+};
+
+
 exports.login = async (req, res) => {
   const { username, password } = req.body;
   try {
